@@ -1,0 +1,15 @@
+.comment {
+    margin: 0 auto;
+    width: 60%;
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &_right {
+            display: flex;
+            gap: 10px;
+        }
+    }
+}
