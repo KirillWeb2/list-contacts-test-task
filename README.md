@@ -13,4 +13,4 @@
 
 Поиск глобальный, не зависит от поля.
 
-<img src="https://imgur.com/a/kQHdfYC" alt="Изображение">
+<img src="https://i.imgur.com/h9nqkac.png" alt="Изображение">
