@@ -26,6 +26,7 @@ export const Contact = React.memo(
         }
         avatar={
           <Avatar
+            className={s.avatar}
             src={avatar}
             alt={`${data.firstName} ${data.lastName}`}
           />
