@@ -1,41 +1,61 @@
-import { IChangeContacts } from './../models/ContactModels';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
-import { IAddContact, IContact, IDeleteContacts } from '../models/ContactModels'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
+import {
+  IAddContact,
+  IContact,
+  IDeleteContacts,
+  IUpdateContacts,
+} from "../models/ContactModels";
 
 export const contactsAPI = createApi({
-  reducerPath: 'contactsAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3030/contacts' }),
-  tagTypes: ['Contacts'],
+  reducerPath: "contactsAPI",
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3030/contacts" }),
+  tagTypes: ["Contacts"],
   endpoints: (build) => ({
-    getContacts: build.query<IContact[], number>({
-      query: (limit: number) => ({
+    getContacts: build.query<IContact[], void>({
+      query: () => ({
         url: `/`,
       }),
-      providesTags: (result) => ['Contacts'],
+      providesTags: () => ["Contacts"],
+    }),
+    searchContacts: build.query<IContact[], string>({
+      query: (value) => ({
+        url: ``,
+        params: {
+          q: value,
+        },
+      }),
     }),
     addContact: build.mutation<IContact[], IAddContact>({
       query: (data) => ({
         url: `/`,
-        method: 'POST',
+        method: "POST",
         body: data,
       }),
-      invalidatesTags: ['Contacts'],
+      invalidatesTags: ["Contacts"],
     }),
     deleteContacts: build.mutation<IContact[], IDeleteContacts>({
       query: (data) => ({
         url: `/${data.id}/`,
-        method: 'DELETE'
+        method: "DELETE",
       }),
-      invalidatesTags: ['Contacts'],
+      invalidatesTags: ["Contacts"],
     }),
-    changeContacts: build.mutation<IContact[], IChangeContacts>({
+    changeContacts: build.mutation<IContact[], IUpdateContacts>({
       query: (data) => ({
         url: `/${data.id}/`,
-        method: 'PUT',
-        body: data
+        method: "PUT",
+        body: data,
       }),
-      invalidatesTags: ['Contacts'],
+      invalidatesTags: ["Contacts"],
     }),
   }),
-})
+});
+
+export const {
+  useAddContactMutation,
+  useChangeContactsMutation,
+  useDeleteContactsMutation,
+  useGetContactsQuery,
+  useLazySearchContactsQuery,
+} = contactsAPI;

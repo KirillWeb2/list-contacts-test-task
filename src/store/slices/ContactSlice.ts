@@ -1,33 +1,34 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IContact } from '../../models/ContactModels'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { IContact } from "../../models/ContactModels";
 
 interface IContactReducer {
-    contacts: IContact[]
-    searchContacts: string
-    changeContactItem: IContact
+  contacts: IContact[];
+  searchContacts: string;
+  currentContact: IContact;
 }
 
 const initialState: IContactReducer = {
-    contacts: [],
-    searchContacts: '',
-    changeContactItem: {} as IContact
-}
+  contacts: [],
+  searchContacts: "",
+  currentContact: {} as IContact,
+};
 
 export const contactsSlice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {
-        getContacts(state, action: PayloadAction<IContact[]>) {
-            state.contacts = action.payload
-        },
-        getSearchString(state, action: PayloadAction<string>) {
-            state.searchContacts = action.payload
-        },
-        getChangeContact(state, action: PayloadAction<IContact>) {
-            state.changeContactItem = action.payload
-        },
+  name: "user",
+  initialState,
+  reducers: {
+    setContacts(state, action: PayloadAction<IContact[]>) {
+      state.contacts = action.payload;
     },
-    extraReducers: {},
-})
+    setSearchString(state, action: PayloadAction<string>) {
+      state.searchContacts = action.payload;
+    },
+    setCurrentContact(state, action: PayloadAction<IContact>) {
+      state.currentContact = action.payload;
+    },
+  },
+});
 
-export default contactsSlice.reducer
+export const contactsReducer = contactsSlice.reducer;
+export const contactsActions = contactsSlice.actions;

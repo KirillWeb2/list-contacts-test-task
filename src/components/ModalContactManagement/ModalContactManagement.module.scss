@@ -1,0 +1,19 @@
+.inputs {
+  margin-top: 20px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}

@@ -1,48 +1,8 @@
 {
   "contacts": [
     {
-      "id": 4,
-      "firstName": "Michaelina",
-      "lastName": "Publia",
-      "country": "South Georgia and the South Sandwich Islands",
-      "city": "Longyearbyen",
-      "date": "1986-05-24"
-    },
-    {
-      "id": 5,
-      "firstName": "Karly",
-      "lastName": "Waldron",
-      "country": "Malaysia",
-      "city": "Bahía Blanca",
-      "date": "1987-11-22"
-    },
-    {
-      "id": 6,
-      "firstName": "Amelia",
-      "lastName": "Cohdwell",
-      "country": "Gambia",
-      "city": "Malang",
-      "date": "1996-09-08"
-    },
-    {
-      "id": 7,
-      "firstName": "Brandise",
-      "lastName": "Teryn",
-      "country": "South Africa",
-      "city": "Barranquilla",
-      "date": "1991-02-05"
-    },
-    {
-      "id": 8,
-      "firstName": "Constance",
-      "lastName": "Fabiola",
-      "country": "Madagascar",
-      "city": "Monaco",
-      "date": "1982-05-03"
-    },
-    {
       "id": 9,
-      "firstName": "Lorie",
+      "firstName": "Lorie 2",
       "lastName": "Elo",
       "country": "Australia",
       "city": "Caracas",
@@ -71,14 +31,6 @@
       "country": "Switzerland",
       "city": "Pretoria",
       "date": "1985-02-09"
-    },
-    {
-      "id": 13,
-      "city": "bla",
-      "country": "bla",
-      "date": "1984-09-15",
-      "firstName": "bla",
-      "lastName": "bla"
     },
     {
       "id": 14,
@@ -246,6 +198,16 @@
       "email": "kirill2004pro10110@mail.ru",
       "password": "3--21aq",
       "id": 1
+    },
+    {
+      "email": "kirill_125_rus",
+      "password": "romanlove14",
+      "id": 2
+    },
+    {
+      "email": "kirill2004pro1000@mail.ru",
+      "password": "3--21aq",
+      "id": 1668418246067
     }
   ]
 }

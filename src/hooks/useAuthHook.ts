@@ -1,82 +1,65 @@
-import axios from "axios"
-import { useCallback, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { IUser } from "../models/UsersModels"
-import { userSlice } from "../store/slices/UserSlice"
-import { useAppDispatch } from "./ReduxHooks"
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export const storageName: string = 'authData'
+import { IStorage, IUser } from "../models/UsersModels";
+import { useLazyGetUserByEmailQuery } from "../services/AuthService";
+import { useActions, useAppSelector } from "./ReduxHooks";
+
+export const storageName: string = "authData";
 
 export const useAuthHook = () => {
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(false)
-    const [isAuth, setIsAuth] = useState<boolean>(false)
+  const { isAuth } = useAppSelector((state) => state.userReducer);
 
-    const { getIsAuth, getUser } = userSlice.actions
+  const [getUser, { data }] = useLazyGetUserByEmailQuery();
 
-    const login = useCallback((user: IUser) => {
-        localStorage.setItem(
-            storageName,
-            JSON.stringify({
-                id: user.id,
-                email: user.email
-            })
-        )
+  const [isLoadingAuth, setIsLoadingAuth] = React.useState<boolean>(false);
 
-        dispatch(getIsAuth(true))
-        setIsLoadingAuth(false)
-    }, [])
+  const { setIsAuth, setUser } = useActions();
 
-    const logout = useCallback(() => {
-        setIsAuth(false)
+  const login = React.useCallback((user: IUser) => {
+    localStorage.setItem(
+      storageName,
+      JSON.stringify({
+        id: user.id,
+        email: user.email,
+      })
+    );
 
-        localStorage.removeItem(storageName)
+    setIsAuth(true);
+    setIsLoadingAuth(false);
+  }, []);
 
-        dispatch(getIsAuth(false))
-        setIsLoadingAuth(false)
-    }, [])
+  const logout = React.useCallback(() => {
+    localStorage.removeItem(storageName);
 
+    setIsAuth(false);
+    setIsLoadingAuth(false);
+  }, []);
 
-    useEffect(() => {
-        let data: IUser | null = null
+  React.useEffect(() => {
+    const userJson: IStorage = JSON.parse(
+      localStorage.getItem(storageName)! as string
+    );
 
-        const userJson = localStorage.getItem(storageName)
+    if(userJson) getUser(userJson.email)
+  }, []);
 
-        if (userJson !== null) {
-            data = JSON.parse(userJson)
-        }
+  React.useEffect(() => {
+    if (data && data.length !== 0) {
+      setIsAuth(true);
+      setUser(data[0]);
+      setIsLoadingAuth(false);
 
-        if (data && data.email) {
-            const getUserById = async () => {
-                try {
-                    await axios.get<IUser[]>(`http://localhost:3030/users?id=${data?.id}`).then(res => {
-                        if (res.data[0] && res.data[0].id) {
-                            dispatch(getIsAuth(true))
-                            dispatch(getUser(res.data[0]))
-
-                            setIsAuth(true)
-                            setIsLoadingAuth(false)
-                        }
-                    })
-
-                    navigate('/contacts')
-                } catch (e) {
-                    console.log(e)
-                }
-            }
-            getUserById()
-        }
-
-        setIsLoadingAuth(false)
-    }, [login])
-
-
-    return {
-        login,
-        logout,
-        isAuth,
-        isLoadingAuth
+      navigate("/contacts");
     }
-}
+  }, [data]);
+
+  return {
+    login,
+    logout,
+    isAuth,
+    isLoadingAuth,
+  };
+};

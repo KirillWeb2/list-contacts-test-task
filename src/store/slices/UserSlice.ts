@@ -1,28 +1,29 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IUser } from '../../models/UsersModels';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { IUser } from "../../models/UsersModels";
 
 interface IUserReducer {
-    user: IUser
-    isAuthUser: boolean
+  user: IUser;
+  isAuth: boolean;
 }
 
 const initialState: IUserReducer = {
-    user: {} as IUser,
-    isAuthUser: false
-}
+  user: {} as IUser,
+  isAuth: false,
+};
 
 export const userSlice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {
-        getUser(state, action: PayloadAction<IUser>) {
-            state.user = action.payload
-        },
-        getIsAuth(state, action: PayloadAction<boolean>) {
-            state.isAuthUser = action.payload
-        },
+  name: "user",
+  initialState,
+  reducers: {
+    setUser(state, action: PayloadAction<IUser>) {
+      state.user = action.payload;
     },
-    extraReducers: {},
-})
+    setIsAuth(state, action: PayloadAction<boolean>) {
+      state.isAuth = action.payload;
+    },
+  },
+});
 
-export default userSlice.reducer
+export const userReducer = userSlice.reducer;
+export const userActions = userSlice.actions;

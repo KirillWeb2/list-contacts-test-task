@@ -1,16 +1,17 @@
-import React, { Suspense } from 'react'
-import { AuthContext } from './context/AuthContext'
-import { useAppSelector } from './hooks/ReduxHooks'
-import { useAuthHook } from './hooks/useAuthHook'
-import { useRoutes } from './routes/route'
-import s from './App.module.scss'
+import React from "react";
+
+import { AuthContext } from "./context/AuthContext";
+import { useAuthHook } from "./hooks/useAuthHook";
+import { useRoutes } from "./routes/route";
 
 function App() {
-  const { isAuth, isLoadingAuth, logout, login } = useAuthHook()
+  const { isAuth, isLoadingAuth, logout, login } = useAuthHook();
 
-  const { isAuthUser } = useAppSelector(state => state.userReducer)
+  const userJson = JSON.parse(localStorage.getItem("authData")! as string);
 
-  const routes = useRoutes(isAuthUser)
+  const auth = !!userJson?.email || isAuth;
+
+  const routes = useRoutes(auth);
 
   return (
     <AuthContext.Provider
@@ -18,13 +19,13 @@ function App() {
         isAuth,
         isLoadingAuth,
         logout,
-        login
+        login,
       }}
     >
-      <div className={'container'}>
-        <Suspense fallback={<h1 className={s.loader}>Загрузка...</h1>}>
+      <div className={"container"}>
+        <React.Suspense fallback={<h1 className={"loader"}>Загрузка...</h1>}>
           {routes}
-        </Suspense>
+        </React.Suspense>
       </div>
     </AuthContext.Provider>
   );

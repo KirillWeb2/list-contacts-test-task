@@ -1,4 +1,4 @@
-export interface IForma {
+export interface IForm {
     email: string
     password: string
 }
@@ -10,5 +10,10 @@ export interface IUser {
 }
 
 export interface IGetUser {
+    email: string
+}
+
+export interface IStorage {
+    id: number
     email: string
 }
